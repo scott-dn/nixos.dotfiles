@@ -1,5 +1,9 @@
 # Alacritty terminal: One Dark colors, JetBrainsMono Nerd Font, maximized undecorated window, zsh as shell.
 { ... }:
+let
+  # Nix strings have no unicode escapes; take the ESC byte from JSON instead.
+  esc = builtins.fromJSON ''"\u001b"'';
+in
 {
   programs.alacritty = {
     enable = true;
@@ -45,20 +49,51 @@
 
       font = {
         size = 11.0;
-        normal = { family = "JetBrainsMono Nerd Font"; style = "Regular"; };
-        bold = { family = "JetBrainsMono Nerd Font"; style = "Bold"; };
-        italic = { family = "JetBrainsMono Nerd Font"; style = "Italic"; };
-        bold_italic = { family = "JetBrainsMono Nerd Font"; style = "Bold Italic"; };
-        offset = { x = 0; y = 5; };
+        normal = {
+          family = "JetBrainsMono Nerd Font";
+          style = "Regular";
+        };
+        bold = {
+          family = "JetBrainsMono Nerd Font";
+          style = "Bold";
+        };
+        italic = {
+          family = "JetBrainsMono Nerd Font";
+          style = "Italic";
+        };
+        bold_italic = {
+          family = "JetBrainsMono Nerd Font";
+          style = "Bold Italic";
+        };
+        offset = {
+          x = 0;
+          y = 5;
+        };
       };
+
+      # Terminals send plain CR for Shift+Enter, so apps cannot tell it from Enter.
+      # ESC+CR is the sequence TUIs read as "insert a newline, do not submit".
+      keyboard.bindings = [
+        {
+          key = "Return";
+          mods = "Shift";
+          chars = "${esc}\r";
+        }
+      ];
 
       window = {
         decorations = "None";
         dynamic_title = true;
         startup_mode = "Maximized";
         option_as_alt = "OnlyLeft";
-        dimensions = { columns = 150; lines = 35; };
-        padding = { x = 15; y = 15; };
+        dimensions = {
+          columns = 150;
+          lines = 35;
+        };
+        padding = {
+          x = 15;
+          y = 15;
+        };
       };
     };
   };

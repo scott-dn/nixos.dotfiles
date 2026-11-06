@@ -1,13 +1,14 @@
 # nixos.dotfiles
 
-NixOS 26.05 + KDE Plasma 6, managed with a flake, home-manager and plasma-manager.
+NixOS 26.05 + KDE Plasma 6, managed with a flake, home-manager, plasma-manager and nix4nvchad.
 
-| Path | Purpose |
-|---|---|
-| `flake.nix`, `flake.lock` | Inputs and their pinned commits |
-| `configuration.nix` | System: boot, network, users, services |
-| `home/` | User config, one module per tool (`default.nix` imports them) |
-| `hardware-configuration.nix` | Generated for this machine only |
+| Path                         | Purpose                                                       |
+| ---------------------------- | ------------------------------------------------------------- |
+| `flake.nix`, `flake.lock`    | Inputs and their pinned commits                               |
+| `configuration.nix`          | System: boot, network, users, services                        |
+| `home/`                      | User config, one module per tool (`default.nix` imports them) |
+| `home/nvchad/`               | NvChad Lua config, copied to `~/.config/nvim` on switch       |
+| `hardware-configuration.nix` | Generated for this machine only                               |
 
 ## Before `nixos-rebuild switch`
 
@@ -46,6 +47,18 @@ Never change `system.stateVersion` or `home.stateVersion`.
 ## Roll back
 
 Pick an older generation at boot, or `sudo nixos-rebuild switch --rollback`. Only the last 3 are kept.
+
+## Neovim
+
+NvChad via nix4nvchad; `flake.nix` imports its module with `starterRepo = ./home/nvchad`.
+
+- Edit `home/nvchad/`, never `~/.config/nvim` — every switch overwrites it. `git add` new files.
+- LSP servers and formatters come from `extraPackages` in `home/neovim.nix`, pinned by `flake.lock`.
+  Wire them up in `lua/configs/lspconfig.lua` and `lua/configs/formatter.lua`.
+- Mason is disabled in `lua/plugins/init.lua`: its prebuilt binaries need `programs.nix-ld`,
+  which is deliberately off. Add tools to `extraPackages` instead.
+- Plugins are lazy.nvim's, fetched at runtime — pinned only by `lazy-lock.json`, not by Nix.
+- `programs.neovim` must stay disabled (the module asserts on it).
 
 ## Notes
 

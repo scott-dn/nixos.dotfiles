@@ -11,7 +11,7 @@
     };
 
     input.keyboard = {
-      layouts = [{ layout = "us"; }];
+      layouts = [ { layout = "us"; } ];
       options = [
         "ctrl:swap_lalt_lctl_lwin"
         "ctrl:nocaps"
@@ -20,15 +20,17 @@
       repeatRate = 50;
     };
 
-    input.touchpads = [{
-      name = "SNSL0028:00 2C2F:0028 Touchpad";
-      vendorId = "2c2f";
-      productId = "0028";
+    input.touchpads = [
+      {
+        name = "SNSL0028:00 2C2F:0028 Touchpad";
+        vendorId = "2c2f";
+        productId = "0028";
 
-      pointerSpeed = 0.03;
-      naturalScroll = true;
-      tapAndDrag = false;
-    }];
+        pointerSpeed = 0.03;
+        naturalScroll = true;
+        tapAndDrag = false;
+      }
+    ];
 
     hotkeys.commands."launch-alacritty" = {
       name = "Launch Alacritty";
@@ -38,39 +40,55 @@
 
     shortcuts = {
       kwin = {
-        "Overview" = [ "Ctrl+K" ];
+        "Overview" = [ "Meta+K" ];
         "Walk Through Windows" = "Ctrl+Tab";
         "Walk Through Windows (Reverse)" = "Ctrl+Shift+Tab";
         "Walk Through Windows of Current Application" = "Ctrl+`";
         "Walk Through Windows of Current Application (Reverse)" = "Ctrl+~";
-        "Window Close" = [ "Alt+F4" "Ctrl+Q" ];
+        "Window Close" = [
+          "Alt+F4"
+          "Ctrl+Q"
+        ];
       };
-      "org.kde.krunner.desktop"._launch = [ "Ctrl+Space" "Search" ];
+      "org.kde.krunner.desktop"._launch = [
+        "Ctrl+Space"
+        "Search"
+      ];
     };
 
     configFile.kdeglobals.KDE.AnimationDurationFactor = 0;
     configFile.kwinrc.ElectricBorders.BottomLeft = "ShowDesktop";
 
-    panels = [{
-      location = "bottom";
-      height = 46;
-      lengthMode = "fit";
-      hiding = "autohide";
-      widgets = [
-        "org.kde.plasma.kickoff"
-        "org.kde.plasma.pager"
-        "org.kde.plasma.icontasks"
-        "org.kde.plasma.marginsseparator"
-        "org.kde.plasma.systemtray"
-        "org.kde.plasma.digitalclock"
-        "org.kde.plasma.showdesktop"
-      ];
-    }];
+    panels = [
+      {
+        location = "bottom";
+        height = 46;
+        lengthMode = "fit";
+        hiding = "autohide";
+        widgets = [
+          "org.kde.plasma.kickoff"
+          "org.kde.plasma.pager"
+          "org.kde.plasma.icontasks"
+          "org.kde.plasma.marginsseparator"
+          "org.kde.plasma.systemtray"
+          "org.kde.plasma.digitalclock"
+          "org.kde.plasma.showdesktop"
+        ];
+      }
+    ];
 
-    desktop.widgets = [{
-      name = "org.kde.plasma.calendar";
-      position = { horizontal = 16; vertical = 16; };
-      size = { width = 420; height = 290; };
-    }];
+    desktop.widgets = [
+      {
+        name = "org.kde.plasma.calendar";
+        position = {
+          horizontal = 16;
+          vertical = 16;
+        };
+        size = {
+          width = 420;
+          height = 290;
+        };
+      }
+    ];
   };
 }

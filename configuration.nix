@@ -1,10 +1,10 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -22,7 +22,10 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
-  networking.networkmanager.insertNameservers = [ "8.8.8.8" "8.8.4.4" ];
+  networking.networkmanager.insertNameservers = [
+    "8.8.8.8"
+    "8.8.4.4"
+  ];
 
   # Set your time zone.
   time.timeZone = "Asia/Ho_Chi_Minh";
@@ -49,7 +52,7 @@
 
   # Configure keymap in X11
   services.xserver = {
-    autoRepeatDelay = 200;   # ms
+    autoRepeatDelay = 200; # ms
     autoRepeatInterval = 20; # 50Hz
   };
   services.xserver.xkb = {
@@ -81,8 +84,11 @@
   users.users."scott-dang" = {
     isNormalUser = true;
     description = "Scott Dang";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
+    packages = with pkgs; [ ];
   };
 
   # Allow unfree packages
@@ -135,12 +141,15 @@
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "26.05"; # Did you read the comment?
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   boot.loader.systemd-boot.configurationLimit = 3;
   nix.gc = {
     automatic = true;
     dates = "weekly";
   };
-  systemd.services.nix-gc.preStart = ''${config.nix.package}/bin/nix-env -p /nix/var/nix/profiles/system --delete-generations +3'';
+  systemd.services.nix-gc.preStart = "${config.nix.package}/bin/nix-env -p /nix/var/nix/profiles/system --delete-generations +3";
 }

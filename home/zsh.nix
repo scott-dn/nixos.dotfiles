@@ -16,6 +16,8 @@
 
     shellAliases = {
       g = "git";
+      vi = "nvim";
+      vim = "nvim";
       cat = "bat";
       ls = "lsd";
       l = "ls -l";
