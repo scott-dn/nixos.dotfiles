@@ -1,9 +1,10 @@
 # tmux: truecolor passthrough, mouse, arrow-key pane navigation, top status bar.
 { pkgs, ... }:
 let
-  # Metric scripts are called directly rather than via the plugins' #{...}
-  # placeholders: those are substituted into status-right when the plugin loads,
-  # and home-manager loads plugins before extraConfig runs.
+  # The cpu and battery plugins are not loaded via programs.tmux.plugins: they
+  # substitute their #{...} placeholders into status-right at load time, and
+  # home-manager emits plugin loading before extraConfig. Calling the scripts
+  # directly makes the order irrelevant.
   cpu = "${pkgs.tmuxPlugins.cpu}/share/tmux-plugins/cpu/scripts";
   battery = "${pkgs.tmuxPlugins.battery}/share/tmux-plugins/battery/scripts";
 in

@@ -13,11 +13,12 @@ vim.lsp.config("gopls", {
   },
 })
 
+vim.lsp.enable "nixd"
 vim.lsp.enable "pyrefly"
 vim.lsp.enable "clangd"
 vim.lsp.enable "ts_ls"
 vim.lsp.enable "gopls"
-vim.lsp.enable "pbls"
+vim.lsp.enable "protols"
 vim.lsp.enable "docker_compose_language_service"
 vim.lsp.enable "dockerls"
 vim.lsp.enable "bashls"

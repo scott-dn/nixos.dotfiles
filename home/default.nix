@@ -16,7 +16,7 @@
   # Release this home-manager config was first created on; do not change.
   home.stateVersion = "26.05";
 
-  # User packages installed outside the program modules below (CLI tools, fonts, apps).
+  # User packages with no module of their own (CLI tools, fonts, apps).
   home.packages = with pkgs; [
     wget
     curl
