@@ -9,6 +9,7 @@
     ./plasma.nix
     ./ssh.nix
     ./starship.nix
+    ./tmux.nix
     ./zsh.nix
   ];
 
@@ -28,7 +29,6 @@
     less
     unzip
     wl-clipboard
-    tmux
 
     nerd-fonts.jetbrains-mono
 
