@@ -33,20 +33,24 @@ in
       bind-key Right select-pane -R
 
       # Status bar at the top, window list centred, metrics on the right.
+      # Colours are base46's onedark palette, the same one nvim and alacritty use:
+      # 22262e statusline_bg, 2d3139 lightbg, abb2bf fg, b6bdca bright, 61afef accent.
       set -g status-position top
       set -g status-interval 5
       set -g status-justify centre
+      set -g status-style "fg=#abb2bf,bg=#22262e"
 
       # Left: pane index.
       set -g status-left-length 90
-      set -g status-left "#[fg=black,bg=white,bold]  #P  "
+      set -g status-left "#[fg=#1e222a,bg=#61afef,bold]  #P  "
 
-      # Middle: window list.
-      setw -g window-status-current-format "#[fg=black,bg=green,bold]  #I #W  "
+      # Middle: window list. The active one reads by its blue background.
+      setw -g window-status-format "#[fg=#b6bdca,bg=#22262e] #I #W "
+      setw -g window-status-current-format "#[fg=#1e222a,bg=#61afef,bold]  #I #W  "
 
       # Right: date, time, cpu, mem, disk, battery.
       set -g status-right-length 120
-      set -g status-right "#[fg=black,bg=white,bold] 📅 %-d %b %Y - %H:%M │ CPU(🧠) #(${cpu}/cpu_percentage.sh) │ Mem(📝) #(${cpu}/ram_percentage.sh) │ Disk(💾) #(df -h / | awk 'NR==2{print $5}') │ 🔋 #(${battery}/battery_percentage.sh) "
+      set -g status-right "#[fg=#abb2bf,bg=#2d3139] 📅 %-d %b %Y - %H:%M │ CPU(🧠) #(${cpu}/cpu_percentage.sh) │ Mem(📝) #(${cpu}/ram_percentage.sh) │ Disk(💾) #(df -h / | awk 'NR==2{print $5}') │ 🔋 #(${battery}/battery_percentage.sh) "
     '';
   };
 }

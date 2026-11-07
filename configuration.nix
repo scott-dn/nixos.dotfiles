@@ -88,7 +88,6 @@
       "networkmanager"
       "wheel"
     ];
-    packages = with pkgs; [ ];
   };
 
   # Allow unfree packages
@@ -106,6 +105,12 @@
     enableSSHSupport = false;
     pinentryPackage = pkgs.pinentry-qt;
   };
+
+  # Fingerprint reader (Goodix 27c6:658c). This also turns on fprintAuth for
+  # login, sddm, sudo and the kde-fingerprint PAM service. Do not set it on the
+  # "kde" service itself: plasma6 disables it there because it can block
+  # password login (nixpkgs#239770).
+  services.fprintd.enable = true;
 
   # List services that you want to enable:
 

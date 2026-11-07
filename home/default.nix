@@ -40,5 +40,7 @@
     discord
     proton-vpn
     steam
+    vlc
+    qbittorrent
   ];
 }

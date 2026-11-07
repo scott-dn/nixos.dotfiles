@@ -12,14 +12,37 @@ NixOS 26.05 + KDE Plasma 6, managed with a flake, home-manager, plasma-manager a
 
 ## Before `nixos-rebuild switch`
 
-1. `git add -A` (flakes only see tracked files).
-2. Git identity and GPG key: `home/git.nix`. Find the key ID with `gpg --list-secret-keys --keyid-format=long`.
-3. Touchpad name and IDs: `home/plasma.nix`. Find them with `grep -i -B1 -A8 touchpad /proc/bus/input/devices`.
-4. Hostname (`configuration.nix`) must match `nixosConfigurations.<name>` in `flake.nix`.
-5. Username must match in `configuration.nix` and `flake.nix`. Don't rename an existing account.
-6. New machine: regenerate `hardware-configuration.nix` with `nixos-generate-config`.
-7. Adjust desktop widget positions (`home/plasma.nix`) and DNS (`configuration.nix`) if needed.
-8. Validate: `sudo nixos-rebuild dry-build --flake ~/nixos.dotfiles#nixos`
+1. `git add -A` — flakes only see tracked files, untracked ones are ignored silently.
+2. `sudo nixos-rebuild dry-build --flake ~/nixos.dotfiles#nixos`
+
+## New machine
+
+1. Install NixOS 26.05 with user `scott-dang`, then clone and regenerate the hardware config.
+   The committed one holds this laptop's disk UUIDs and will not boot elsewhere.
+
+```bash
+nix-shell -p git --run \
+  'git clone https://github.com/scott-dn/nixos.dotfiles ~/nixos.dotfiles'
+cd ~/nixos.dotfiles
+sudo nixos-generate-config --show-hardware-config > hardware-configuration.nix
+```
+
+2. Fix the machine-specific values:
+
+| File                | Value                                  | Notes                                                                          |
+| ------------------- | -------------------------------------- | ------------------------------------------------------------------------------ |
+| `configuration.nix` | `networking.hostName`                  | must match `nixosConfigurations.<name>` in `flake.nix`                         |
+| `configuration.nix` | `insertNameservers`                    | drop it unless the local DNS misbehaves                                        |
+| `home/plasma.nix`   | touchpad `name`/`vendorId`/`productId` | `grep -i -B1 -A8 touchpad /proc/bus/input/devices`; wrong values fail silently |
+| `home/plasma.nix`   | `desktop.widgets` positions            | pixels, currently for 1800x1125                                                |
+| `home/git.nix`      | `signing.key`                          | `gpg --list-secret-keys --keyid-format=long`                                   |
+
+3. Restore the secrets, which are not in the repo: `gpg --import <key>` and `~/.ssh/git` (chmod 600).
+   Without the GPG key every commit fails, since `signByDefault` is on.
+4. Build and switch (below), then: `passwd`, launch `nvim` once so lazy.nvim fetches plugins, `fprintd-enroll`.
+
+Renaming the user means changing it in both `configuration.nix` and `flake.nix` — on an existing
+account that creates a second empty one instead.
 
 ## Apply
 
