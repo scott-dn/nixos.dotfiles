@@ -3,6 +3,7 @@
 {
   imports = [
     ./alacritty.nix
+    ./direnv.nix
     ./git.nix
     ./lazygit.nix
     ./neovim.nix
@@ -32,10 +33,14 @@
 
     nerd-fonts.jetbrains-mono
 
+    nodejs_26
+    pnpm
+
     terraform
     claude-code
     google-chrome
     slack
+    goldendict-ng
 
     discord
     proton-vpn

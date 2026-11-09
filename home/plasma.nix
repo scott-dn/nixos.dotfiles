@@ -32,10 +32,17 @@
       }
     ];
 
-    hotkeys.commands."launch-alacritty" = {
-      name = "Launch Alacritty";
-      key = "Ctrl+Alt+T";
-      command = "alacritty";
+    hotkeys.commands = {
+      "launch-alacritty" = {
+        name = "Launch Alacritty";
+        key = "Ctrl+Alt+T";
+        command = "alacritty";
+      };
+      "launch-google-chrome" = {
+        name = "Launch Google Chrome";
+        key = "Ctrl+Alt+C";
+        command = "google-chrome";
+      };
     };
 
     shortcuts = {

@@ -152,6 +152,11 @@
     "flakes"
   ];
 
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
   boot.loader.systemd-boot.configurationLimit = 3;
   nix.gc = {
     automatic = true;

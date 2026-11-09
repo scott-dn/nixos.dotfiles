@@ -29,13 +29,12 @@ sudo nixos-generate-config --show-hardware-config > hardware-configuration.nix
 
 2. Fix the machine-specific values:
 
-| File                | Value                                  | Notes                                                                          |
-| ------------------- | -------------------------------------- | ------------------------------------------------------------------------------ |
-| `configuration.nix` | `networking.hostName`                  | must match `nixosConfigurations.<name>` in `flake.nix`                         |
-| `configuration.nix` | `insertNameservers`                    | drop it unless the local DNS misbehaves                                        |
-| `home/plasma.nix`   | touchpad `name`/`vendorId`/`productId` | `grep -i -B1 -A8 touchpad /proc/bus/input/devices`; wrong values fail silently |
-| `home/plasma.nix`   | `desktop.widgets` positions            | pixels, currently for 1800x1125                                                |
-| `home/git.nix`      | `signing.key`                          | `gpg --list-secret-keys --keyid-format=long`                                   |
+| File                | Value                                  | Notes                                                  |
+| ------------------- | -------------------------------------- | ------------------------------------------------------ |
+| `configuration.nix` | `networking.hostName`                  | must match `nixosConfigurations.<name>` in `flake.nix` |
+| `configuration.nix` | `insertNameservers`                    | drop it unless the local DNS misbehaves                |
+| `home/plasma.nix`   | touchpad `name`/`vendorId`/`productId` | wrong values fail silently                             |
+| `home/git.nix`      | `signing.key`                          | `gpg --list-secret-keys --keyid-format=long`           |
 
 3. Restore the secrets, which are not in the repo: `gpg --import <key>` and `~/.ssh/git` (chmod 600).
    Without the GPG key every commit fails, since `signByDefault` is on.
