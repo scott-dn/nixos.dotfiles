@@ -106,11 +106,10 @@
     pinentryPackage = pkgs.pinentry-qt;
   };
 
-  # Fingerprint reader (Goodix 27c6:658c). This also turns on fprintAuth for
-  # login, sddm, sudo and the kde-fingerprint PAM service. Do not set it on the
-  # "kde" service itself: plasma6 disables it there because it can block
-  # password login (nixpkgs#239770).
+  # Goodix 27c6:658c. fprintAuth off for login: sddm substacks it, and
+  # pam_fprintd blocks password auth for 30s. sudo/kde-fingerprint keep it.
   services.fprintd.enable = true;
+  security.pam.services.login.fprintAuth = false;
 
   # List services that you want to enable:
 

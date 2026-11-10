@@ -7,7 +7,7 @@
     workspace = {
       lookAndFeel = "org.kde.breezedark.desktop";
       colorScheme = "BreezeDark";
-      wallpaper = "${pkgs.kdePackages.plasma-workspace-wallpapers}/share/wallpapers/DarkestHour";
+      wallpaper = ../wallpaper.jpg;
     };
 
     input.keyboard = {
@@ -88,8 +88,8 @@
       {
         name = "org.kde.plasma.calendar";
         position = {
-          horizontal = 16;
-          vertical = 16;
+          horizontal = 32;
+          vertical = 32;
         };
         size = {
           width = 420;
