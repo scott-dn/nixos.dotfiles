@@ -9,9 +9,7 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_latest; # Use latest kernel.
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -32,7 +30,6 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
     LC_IDENTIFICATION = "en_US.UTF-8";
@@ -43,6 +40,27 @@
     LC_PAPER = "en_US.UTF-8";
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
+  };
+  i18n.inputMethod = {
+    enable = true;
+    type = "fcitx5";
+    fcitx5.waylandFrontend = true;
+    fcitx5.addons = with pkgs; [ qt6Packages.fcitx5-unikey ];
+    fcitx5.settings = {
+      globalOptions."Hotkey/TriggerKeys"."0" = "Alt+space"; # toggle input method (physical Ctrl+Space, lalt/lctl swapped)
+      inputMethod = {
+        # one input method group
+        "Groups/0" = {
+          Name = "Default";
+          "Default Layout" = "us";
+          DefaultIM = "unikey"; # start in Vietnamese
+        };
+        "Groups/0/Items/0".Name = "keyboard-us"; # plain English layout
+        "Groups/0/Items/1".Name = "unikey"; # Vietnamese
+        GroupOrder."0" = "Default"; # group list; only "Default"
+      };
+      addons.unikey.globalSection.InputMethod = "Telex"; # typing style
+    };
   };
 
   # KDE Plasma

@@ -65,6 +65,7 @@
 
     configFile.kdeglobals.KDE.AnimationDurationFactor = 0;
     configFile.kwinrc.ElectricBorders.BottomLeft = "ShowDesktop";
+    configFile.kwinrc.Wayland.InputMethod = "/run/current-system/sw/share/applications/org.fcitx.Fcitx5.desktop"; # KWin launches fcitx5 (System Settings > Virtual Keyboard)
 
     panels = [
       {
