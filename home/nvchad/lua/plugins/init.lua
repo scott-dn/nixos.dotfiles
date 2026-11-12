@@ -83,7 +83,9 @@ local plugings = {
     "m4xshen/hardtime.nvim",
     lazy = false,
     dependencies = { "MunifTanjim/nui.nvim" },
-    opts = {},
+    opts = {
+      max_count = 5,
+    },
   },
   {
     "MeanderingProgrammer/render-markdown.nvim",

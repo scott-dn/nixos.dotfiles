@@ -59,6 +59,7 @@ nix flake update
 sudo nixos-rebuild build --flake .#nixos
 nix store diff-closures /run/current-system ./result
 sudo nixos-rebuild switch --flake .#nixos
+nvim --headless '+Lazy! sync' +qa
 ```
 
 ## Upgrade release
@@ -79,7 +80,10 @@ NvChad via nix4nvchad; `flake.nix` imports its module with `starterRepo = ./home
   Wire them up in `lua/configs/lspconfig.lua` and `lua/configs/formatter.lua`.
 - Mason is disabled in `lua/plugins/init.lua`: its prebuilt binaries need `programs.nix-ld`,
   which is deliberately off. Add tools to `extraPackages` instead.
-- Plugins are lazy.nvim's, fetched at runtime — pinned only by `lazy-lock.json`, not by Nix.
+- Plugins are lazy.nvim's, fetched at runtime into `~/.local/share/nvim/lazy`, not by Nix. A switch
+  doesn't touch them but resets `~/.config/nvim/lazy-lock.json` to empty, so nothing is pinned.
+  After each switch (or `nix flake update`), run `nvim --headless '+Lazy! sync' +qa`
+  (or `:Lazy sync` inside nvim) to bring plugins to their latest versions and regenerate the lockfile.
 - `programs.neovim` must stay disabled (the module asserts on it).
 
 ## Notes

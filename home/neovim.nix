@@ -11,6 +11,9 @@
     # Language servers and formatters, pinned by flake.lock. Visible to NvChad
     # only, not to the login shell. Register servers in lua/configs/lspconfig.lua.
     extraPackages = with pkgs; [
+      # Shadows the wrapper's built-in nodejs 24 so `node` in nvim matches the shell.
+      nodejs_26
+
       # lua
       lua-language-server
       stylua
