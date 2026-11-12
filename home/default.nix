@@ -34,7 +34,7 @@
     nerd-fonts.jetbrains-mono
 
     nodejs_26
-    pnpm
+    pnpm_12
 
     terraform
     claude-code

@@ -54,12 +54,13 @@ Log out and back in afterwards. For Plasma or large updates use `boot` and reboo
 ## Update packages
 
 ```bash
-cd ~/nixos.dotfiles
-nix flake update
-sudo nixos-rebuild build --flake .#nixos
-nix store diff-closures /run/current-system ./result
-sudo nixos-rebuild switch --flake .#nixos
-nvim --headless '+Lazy! sync' +qa
+cd ~/nixos.dotfiles                                     # flake commands run from the repo root
+nix flake update                                        # bump every input in flake.lock to its latest commit
+sudo nixos-rebuild build --flake .#nixos                # build only, leaves ./result; running system untouched
+nix store diff-closures /run/current-system ./result    # list added/removed/upgraded packages vs. the running system
+sudo nixos-rebuild switch --flake .#nixos               # activate the new generation and make it the boot default
+nvim --headless '+Lazy! sync' +qa                       # update lazy.nvim plugins and regenerate lazy-lock.json, then quit
+nix-collect-garbage                                     # delete store paths no generation references (frees disk)
 ```
 
 ## Upgrade release
