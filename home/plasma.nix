@@ -20,17 +20,30 @@
       repeatRate = 50;
     };
 
-    input.touchpads = [
-      {
-        name = "SNSL0028:00 2C2F:0028 Touchpad";
-        vendorId = "2c2f";
-        productId = "0028";
-
-        pointerSpeed = 0.03;
-        naturalScroll = true;
-        tapAndDrag = false;
-      }
-    ];
+    # Shared settings are merged into each device; add new machines' touchpads to the list (see /proc/bus/input/devices).
+    input.touchpads =
+      map
+        (
+          d:
+          {
+            pointerSpeed = 0.03;
+            naturalScroll = true;
+            tapAndDrag = false;
+          }
+          // d
+        )
+        [
+          {
+            name = "SNSL0028:00 2C2F:0028 Touchpad";
+            vendorId = "2c2f";
+            productId = "0028";
+          }
+          {
+            name = "ELAN0676:00 04F3:3195 Touchpad";
+            vendorId = "04f3";
+            productId = "3195";
+          }
+        ];
 
     hotkeys.commands = {
       "launch-alacritty" = {
