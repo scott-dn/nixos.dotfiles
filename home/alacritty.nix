@@ -1,9 +1,5 @@
 # Alacritty terminal: One Dark colors, JetBrainsMono Nerd Font, maximized undecorated window, zsh as shell.
 { ... }:
-let
-  # Nix strings have no unicode escapes; take the ESC byte from JSON instead.
-  esc = builtins.fromJSON ''"\u001b"'';
-in
 {
   programs.alacritty = {
     enable = true;
@@ -71,13 +67,21 @@ in
         };
       };
 
-      # Terminals send plain CR for Shift+Enter, so apps cannot tell it from Enter.
-      # ESC+CR is the sequence TUIs read as "insert a newline, do not submit".
+      # builtins.fromJSON is needed because Nix strings have no \u escapes.
       keyboard.bindings = [
+        # Shift+Enter: terminals send plain CR, so apps cannot tell it from Enter.
+        #   ESC+CR is the sequence TUIs read as "insert a newline, do not submit".
         {
           key = "Return";
           mods = "Shift";
-          chars = "${esc}\r";
+          chars = "${builtins.fromJSON ''"\u001b"''}\r";
+        }
+
+        # Ctrl+Backspace: send ESC+DEL (same as Alt+Backspace) so it deletes a word.
+        {
+          key = "Back";
+          mods = "Control";
+          chars = builtins.fromJSON ''"\u001b\u007f"'';
         }
       ];
 
