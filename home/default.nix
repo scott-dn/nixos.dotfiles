@@ -30,6 +30,7 @@
     less
     unzip
     wl-clipboard
+    btop
 
     nerd-fonts.jetbrains-mono
 

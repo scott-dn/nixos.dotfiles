@@ -174,6 +174,12 @@
     enable32Bit = true;
   };
 
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings.General.Experimental = true; # optional: battery level reporting
+  };
+
   boot.loader.systemd-boot.configurationLimit = 3;
   nix.gc = {
     automatic = true;

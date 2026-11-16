@@ -1,5 +1,5 @@
 # KDE Plasma via plasma-manager: dark theme, wallpaper, keyboard layout/repeat, touchpad, shortcuts, panel, desktop widgets.
-{ pkgs, ... }:
+{ ... }:
 {
   programs.plasma = {
     enable = true;
