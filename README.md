@@ -91,7 +91,7 @@ NvChad via nix4nvchad; `flake.nix` imports its module with `starterRepo = ./home
 
 - plasma-manager runs widget and wallpaper scripts only when their content changes. To force a re-run:
   `rm ~/.local/share/plasma-manager/last_run_desktop_script_*` then `~/.local/share/plasma-manager/run_all.sh` inside Plasma.
-- Panels and desktop widgets are recreated from `home/plasma.nix`; edit there, not by hand.
+- Panels are recreated from `home/plasma.nix`; edit there, not by hand.
 - Existing config files are renamed to `*.backup` on the first switch.
 - Nix never deletes your data (`~/.gnupg`, `~/.local/share/Steam`, ...). Back up GPG keys separately.
 - NixOS and home-manager use different option names (e.g. `programs.git.config` vs `.settings`); check which file a block is in.

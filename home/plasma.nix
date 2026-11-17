@@ -1,4 +1,4 @@
-# KDE Plasma via plasma-manager: dark theme, wallpaper, keyboard layout/repeat, touchpad, shortcuts, panel, desktop widgets.
+# KDE Plasma via plasma-manager: dark theme, wallpaper, keyboard layout/repeat, touchpad, shortcuts, panel, desktop calendar.
 { ... }:
 {
   programs.plasma = {
@@ -98,18 +98,19 @@
       }
     ];
 
-    desktop.widgets = [
-      {
-        name = "org.kde.plasma.calendar";
-        position = {
-          horizontal = 32;
-          vertical = 32;
-        };
-        size = {
-          width = 420;
-          height = 290;
-        };
-      }
-    ];
+    startup.desktopScript."calendar_widget" = {
+      priority = 2; # same stage as the panels script (wallpaper runs at 3)
+      runAlways = true; # idempotent, so safe to run at every login
+      # Plasma scripting JS, run through plasmashell's evaluateScript at login.
+      # On the main screen (screen 0) it adds the calendar only if none exists, and removes extra copies.
+      text = ''
+        desktops().forEach(function (d) {
+          if (d.screen !== 0) return;
+          var found = d.widgets("org.kde.plasma.calendar");
+          if (found.length === 0) d.addWidget("org.kde.plasma.calendar", 32, 32, 420, 290);
+          found.slice(1).forEach(function (x) { x.remove(); });
+        });
+      '';
+    };
   };
 }
