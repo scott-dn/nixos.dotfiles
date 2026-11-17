@@ -82,6 +82,7 @@
 
     panels = [
       {
+        screen = 0;
         location = "bottom";
         height = 46;
         lengthMode = "fit";
