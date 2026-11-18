@@ -1,4 +1,4 @@
-# KDE Plasma via plasma-manager: dark theme, wallpaper, keyboard layout/repeat, touchpad, shortcuts, panel, desktop calendar.
+# KDE Plasma via plasma-manager: dark theme, wallpaper, keyboard layout/repeat, touchpad, shortcuts, panel (digital clock with calendar popup).
 { ... }:
 {
   programs.plasma = {
@@ -7,7 +7,12 @@
     workspace = {
       lookAndFeel = "org.kde.breezedark.desktop";
       colorScheme = "BreezeDark";
-      wallpaper = ../wallpaper.jpg;
+      # Content-addressed path: ../wallpaper.jpg would resolve into the flake source,
+      # whose hash changes on every edit and makes plasma-manager re-run (and wipe) all desktop scripts.
+      wallpaper = builtins.path {
+        path = ../wallpaper.jpg;
+        name = "wallpaper.jpg";
+      };
     };
 
     input.keyboard = {
@@ -78,7 +83,9 @@
 
     configFile.kdeglobals.KDE.AnimationDurationFactor = 0;
     configFile.kwinrc.ElectricBorders.BottomLeft = "ShowDesktop";
-    configFile.kwinrc.Wayland.InputMethod = "/run/current-system/sw/share/applications/org.fcitx.Fcitx5.desktop"; # KWin launches fcitx5 (System Settings > Virtual Keyboard)
+
+    # KWin launches fcitx5 (System Settings > Virtual Keyboard)
+    configFile.kwinrc.Wayland.InputMethod = "/run/current-system/sw/share/applications/org.fcitx.Fcitx5.desktop";
 
     panels = [
       {
@@ -93,11 +100,19 @@
           "org.kde.plasma.icontasks"
           "org.kde.plasma.marginsseparator"
           "org.kde.plasma.systemtray"
-          "org.kde.plasma.digitalclock"
+          {
+            digitalClock = {
+              date = {
+                enable = true;
+                format = "isoDate";
+                position = "belowTime";
+              };
+              calendar.showWeekNumbers = true;
+            };
+          }
           "org.kde.plasma.showdesktop"
         ];
       }
     ];
-
   };
 }
